@@ -1,7 +1,4 @@
-CC = gcc
-UNAME = $(shell uname)
-
-
+LDFLAGS=-lm
 all: 
-	$(CC) main.c `sdl-config --cflags --libs` -o raytracer
+	$(CC) src/main.c `sdl-config --cflags --libs` $(LDFLAGS) -o bin/raytracer
 
