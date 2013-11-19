@@ -3,59 +3,12 @@
 #include <SDL/SDL.h>
 #include <math.h>
 
+#include "vector.h"
+
 #define WIDTH 800
 #define HEIGHT 600
 #define BPP 32
 
-#define NSPHERES 9
-#define NLIGHTS 9
-
-struct point {
-	float x, y, z;
-};
-
-struct sphere {
-	 struct point p;
-	 int r;
-};
-
-struct light {
-	struct point p;
-	int r, g, b;
-};
-
-struct ray {
-	struct point s;
-	struct point e;
-};
-
-float dot(struct point v, struct point u) {
-	return v.x * u.x + v.y * u.y + v.z * u.z;
-}
-
-struct point add(struct point v, struct point u) {
-	struct point ret;
-	ret.x = v.x + u.x;
-	ret.y = v.y + u.y;
-	ret.z = v.z + u.z;
-	return ret;
-}
-
-struct point sub(struct point v, struct point u) {
-	struct point ret;
-	ret.x = v.x - u.x;
-	ret.y = v.y - u.y;
-	ret.z = v.z - u.z;
-	return ret;
-}
-
-struct point mkp(float x, float y, float z) {
-	struct point ret;
-	ret.x = x;
-	ret.y = y;
-	ret.z = z;
-	return ret;
-}
 
 
 /* algorithm taken from
