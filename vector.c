@@ -14,11 +14,11 @@ vector sub(vector a, vector b) {
 	c.z = a.z - b.z;
 	return c;
 }
-vector mult(vector a, vector b) {
+vector scale(float i, vector a) {
 	vector c;
-	c.x = a.x * b.x;
-	c.y = a.y * b.y;
-	c.z = a.z * b.z;
+	c.x = a.x * i;
+	c.y = a.y * i;
+	c.z = a.z * i;
 	return c;
 }
 vector cross(vector a, vector b) {

@@ -4,6 +4,6 @@ typedef struct {
 
 vector add(vector, vector);
 vector sub(vector, vector);
-vector mult(vector, vector);
+vector scale(float, vector);
 vector cross(vector, vector);
 float dot(vector, vector);
