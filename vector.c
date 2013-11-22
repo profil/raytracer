@@ -1,5 +1,12 @@
 #include "vector.h"
 
+vector makevec(float x, float y, float z) {
+	vector c;
+	c.x = x;
+	c.y = y;
+	c.z = z;
+	return c;
+}
 vector add(vector a, vector b) {
 	vector c;
 	c.x = a.x + b.x;
