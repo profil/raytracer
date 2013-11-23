@@ -1,11 +1,11 @@
 struct sphere {
 	/* center and radius */
 	struct vector c;
-	double r;
+	float r;
 	unsigned int color; /* 0xXXRRGGBB */
 };
 
 
-double sphere_collision(struct ray, struct sphere);
+float sphere_collision(struct ray, struct sphere);
 int sphere_intersect(struct ray, struct sphere *, int, int *);
 

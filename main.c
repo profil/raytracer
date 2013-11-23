@@ -38,7 +38,8 @@ int main(int argc, char *argv[]) {
 
 	/* hard coded values for now.. */
 	struct sphere spheres[] = {
-		{{100, 100, 100}, 40, 0x00f4005f}
+		{{100, 100, 100}, 80, 0xff0000},
+		{{400, 100, 100}, 80, 0x00ff00},
 		/*
 		{{-1e5 - 49, 0, 0}, 1e5, 0x00bd3f3f},
 		{{1e5 + 49, 0, 0}, 1e5, 0x003f3fbd},
@@ -50,17 +51,23 @@ int main(int argc, char *argv[]) {
 		{{23, -24.3, -3.6}, 16.5, 0x00efefef},
 		*/
 	};
-	/*struct sphere lights[] = {
-		{{0, 24.3, 0}, 1.5, 0x00aaaaaa},
+	struct sphere lights[] = {
+		{{0, 24.3, 0}, 1.5, 0xff},
+		{{800, 200.3, 0}, 1.5, 0xff},
 	};
-*/
 
 
+	/* TODO:
+	 * Use a camera to get the correct perspective.
+	 */
 	for(x = 0; x < WIDTH; x++) {
 		for(y = 0; y < HEIGHT; y++) {
 			current_ray = makeray(makevec(x, y, z), makevec(0, 0, 1));
 
-			pixels[WIDTH * y + x] = radiance(current_ray, spheres, sizeof(spheres)/sizeof(struct sphere), 0);
+			pixels[WIDTH * y + x] = radiance(current_ray,
+					spheres, sizeof(spheres)/sizeof(struct sphere),
+					lights, sizeof(lights)/sizeof(struct sphere),
+					0);
 
 
 

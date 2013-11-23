@@ -8,8 +8,8 @@
  * returns the z coordinate for the reflecting/refracting rays
  * or zero if no collision occured
  */
-double sphere_collision(struct ray ray, struct sphere sphere) {
-	double discriminant, D, t1, t2, vd;
+float sphere_collision(struct ray ray, struct sphere sphere) {
+	float discriminant, D, t1, t2, vd;
 	struct vector v;
 
 	v = sub(sphere.c, ray.p);
@@ -21,32 +21,25 @@ double sphere_collision(struct ray ray, struct sphere sphere) {
 		/* no intersection */
 		return 0;
 	
-	D = sqrt(discriminant);
+	D = sqrtf(discriminant);
 	t1 = vd + D;
 	t2 = vd - D;
 
-	if(t1 <= t2) {
-		if(t1 > 0.0f) {
-			return t1;
-		}
-		else {
-			return 0;
-		}
+	if(t1 > 0.0f && t1 < t2) {
+		return t1;
+	}
+	else if(t2 > 0.0f) {
+		return t2;
 	}
 	else {
-		if(t2 > 0.0f) {
-			return t2;
-		}
-		else {
-			return 0;
-		}
+		return 0;
 	}
 }
 
 
 int sphere_intersect(struct ray r, struct sphere *spheres, int spheres_len, int *sphere_id) {
 	int i;
-	double t = 1e100, distance = 0;
+	float t = 100000, distance = 0;
 	for(i = 0; i < spheres_len; i++) {
 		distance = sphere_collision(r, spheres[i]);
 		if(distance > 0.0f) {
@@ -56,7 +49,7 @@ int sphere_intersect(struct ray r, struct sphere *spheres, int spheres_len, int 
 			}
 		}
 	}
-	return t != 1e100 ? t : 0;
+	return t != 100000 ? t : 0;
 }
 
 

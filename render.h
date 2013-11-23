@@ -1,1 +1,1 @@
-unsigned int radiance(struct ray, struct sphere *, int, int);
+unsigned int radiance(struct ray, struct sphere *, int, struct sphere *, int, int);

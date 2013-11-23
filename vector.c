@@ -1,7 +1,7 @@
 #include <math.h>
 #include "vector.h"
 
-struct vector makevec(double x, double y, double z) {
+struct vector makevec(float x, float y, float z) {
 	struct vector c;
 	c.x = x;
 	c.y = y;
@@ -22,7 +22,7 @@ struct vector sub(struct vector a, struct vector b) {
 	c.z = a.z - b.z;
 	return c;
 }
-struct vector scale(double i, struct vector a) {
+struct vector scale(float i, struct vector a) {
 	struct vector c;
 	c.x = a.x * i;
 	c.y = a.y * i;
@@ -30,13 +30,8 @@ struct vector scale(double i, struct vector a) {
 	return c;
 }
 struct vector norm(struct vector a) {
-	struct vector c;
-	double cof = 1 / sqrt(dot(a, a));
-	c.x *= cof;
-	c.y *= cof;
-	c.z *= cof;
-	return c;
+	return scale(1.0f / sqrtf(dot(a, a)), a);
 }
-double dot(struct vector a, struct vector b) {
+float dot(struct vector a, struct vector b) {
 	return a.x*b.x + a.y*b.y + a.z*b.z;
 }
