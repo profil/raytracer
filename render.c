@@ -14,10 +14,9 @@ unsigned int radiance(struct ray current_ray, struct sphere *spheres, int sphere
 
 	for(;;) {
 		if((distance = sphere_intersect(current_ray, spheres, spheres_len, &sphere_id)) == 0 || depth > 5) { 
-			color = 0x00; /* return background color, black */
+			color += 0x00; /* return background color, black */
 			break;
 		}
-
 		current_sphere = spheres[sphere_id];
 		hit = makevec(current_ray.p.x, current_ray.p.y, distance);
 		normal = norm(sub(hit, current_sphere.c));
@@ -30,7 +29,9 @@ unsigned int radiance(struct ray current_ray, struct sphere *spheres, int sphere
 
 		/* take care of lights and shadows */
 
-		current_ray.d = normal;
+		/* The reflected ray */
+		current_ray.p = hit;
+		current_ray.d = sub(current_ray.d, scale(2.0f * dot(normal, current_ray.d), normal));
 		depth++;
 	}
 	return color;

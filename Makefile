@@ -6,6 +6,9 @@ OBJ = $(SRC:.c=.o)
 
 all: rayc
 
+debug: CFLAGS += -g
+debug: all
+
 .c.o:
 	$(CC) -c $(CFLAGS) $< -o $@
 
@@ -15,4 +18,4 @@ rayc: $(OBJ)
 clean:
 	rm -f $(OBJ) rayc
 
-.PHONY: clean all
+.PHONY: clean all debug
