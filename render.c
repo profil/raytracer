@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 #include "vector.h"
 #include "ray.h"
@@ -25,7 +26,7 @@ unsigned int radiance(struct ray current_ray, struct sphere *spheres, int sphere
 
 	for(;;) {
 		if((distance = sphere_intersect(current_ray, spheres, spheres_len, &sphere_id)) == 0 || depth > 5) { 
-			color += 0x00; /* return background color, black */
+			/* return background color, black */
 			break;
 		}
 		current_sphere = spheres[sphere_id];
@@ -36,6 +37,10 @@ unsigned int radiance(struct ray current_ray, struct sphere *spheres, int sphere
 		/* struct vector glass_normal = dot(norm, current_ray.d) < 0 ? normal : scale(-1, normal); */
 
 
+		r = current_sphere.color >> 16 & 0xff;
+		g = current_sphere.color >> 8 & 0xff;
+		b = current_sphere.color & 0xff;
+
 		/* take care of lights and shadows */
 		for(i = 0; i < lights_len; i++) {
 			shadow.d = norm(sub(lights[i].c, hit));
@@ -44,15 +49,13 @@ unsigned int radiance(struct ray current_ray, struct sphere *spheres, int sphere
 			
 			/* if not in shadow, give color */
 			if(!sphere_intersect(shadow, spheres, spheres_len, &sphere_id)) {
-				lambert = dot(shadow.d, normal);
+				if((lambert = dot(shadow.d, normal)) < 0.0f)
+					continue;
 
-				r = current_sphere.color >> 16 & 0xff;
-				g = current_sphere.color >> 8 & 0xff;
-				b = current_sphere.color & 0xff;
 
-				r += lights[i].color * lambert;
-				g += lights[i].color * lambert;
-				b += lights[i].color * lambert;
+				r = clamp(r + lights[i].color * lambert);
+				g = clamp(g + lights[i].color * lambert);
+				b = clamp(b + lights[i].color * lambert);
 				color = r << 16 | g << 8 | b;
 			}
 		}
