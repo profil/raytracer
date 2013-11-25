@@ -32,6 +32,13 @@ struct vector scale(float i, struct vector a) {
 struct vector norm(struct vector a) {
 	return scale(1.0f / sqrtf(dot(a, a)), a);
 }
+struct vector cross(struct vector a, struct vector b) {
+	struct vector c;
+	c.x = a.y*b.z - a.z*b.y;
+	c.y = a.z*b.x - a.x*b.z;
+	c.z = a.x*b.y - a.y*b.x;
+	return c;
+}
 float dot(struct vector a, struct vector b) {
 	return a.x*b.x + a.y*b.y + a.z*b.z;
 }
