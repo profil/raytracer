@@ -30,7 +30,7 @@ struct vector scale(float i, struct vector a) {
 	return c;
 }
 struct vector norm(struct vector a) {
-	return scale(1.0f / sqrtf(dot(a, a)), a);
+	return scale(1.0f / sqrt(dot(a, a)), a);
 }
 struct vector cross(struct vector a, struct vector b) {
 	struct vector c;

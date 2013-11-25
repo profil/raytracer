@@ -21,7 +21,7 @@ float sphere_collision(struct ray ray, struct sphere sphere) {
 		/* no intersection */
 		return 0;
 	
-	D = sqrtf(discriminant);
+	D = sqrt(discriminant);
 	t1 = vd + D;
 	t2 = vd - D;
 
