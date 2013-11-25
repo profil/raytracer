@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -pedantic -ansi `sdl-config --cflags`
-LDFLAGS = `sdl-config --libs` -lm
+CFLAGS = -Wall -pedantic -ansi
+LDFLAGS =  -lm
 SRC = vector.c ray.c render.c sphere.c main.c
 OBJ = $(SRC:.c=.o)
 
