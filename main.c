@@ -6,8 +6,8 @@
 #include "sphere.h"
 #include "render.h"
 
-#define WIDTH 800
-#define HEIGHT 600
+#define WIDTH 1920
+#define HEIGHT 1080
 
 
 
@@ -35,15 +35,19 @@ int main(int argc, char *argv[]) {
 	struct sphere spheres[] = {
 		{{200, 300, 100}, 80, 0xffffff},
 		{{500, 300, 100}, 80, 0xffffff},
+		{{1400, 300, 100}, 50, 0xffffff},
+		{{1200, 550, 300}, 150, 0xffffff},
+		
+
 		{{400, 109000, 100}, 100000, 0xffffff},
 		{{400, 300, 109000}, 100000, 0xffffff},
 	};
 	struct sphere lights[] = {
-		{{400, 50, 100}, 1, 0xff},
+		{{400, 50, -10}, 1, 0xff},
 	};
 
 
-	camera = makevec(400, 300, -500);
+	camera = makevec(WIDTH/2, HEIGHT/2, -400);
 	
 	for(x = 0; x < WIDTH; x++) {
 		for(y = 0; y < HEIGHT; y++) {
