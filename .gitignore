@@ -1,2 +1,5 @@
-bin/*
+tags
+rayc
+image.ppm
 *.swp
+*.o
