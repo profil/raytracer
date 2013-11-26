@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -6,7 +7,7 @@
 #include "sphere.h"
 #include "render.h"
 
-#define WIDTH 1920
+#define WIDTH 6000
 #define HEIGHT 1080
 
 
@@ -26,7 +27,7 @@ void write_image(unsigned int *pixels) {
 }
 
 int main(int argc, char *argv[]) {
-	unsigned int pixels[WIDTH*HEIGHT] = {0};
+	unsigned int *pixels;
 	struct ray current_ray;
 	struct vector camera;
 	int x, y;
@@ -46,6 +47,10 @@ int main(int argc, char *argv[]) {
 		{{400, 50, -10}, 1, 0xff},
 	};
 
+	if((pixels = malloc(sizeof(unsigned int) * WIDTH*HEIGHT)) == NULL) {
+		fprintf(stderr, "Could not allocate memory!\n");
+		return 1;
+	}
 
 	camera = makevec(WIDTH/2, HEIGHT/2, -400);
 	
