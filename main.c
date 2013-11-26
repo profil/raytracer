@@ -28,15 +28,17 @@ void write_image(unsigned int *pixels) {
 int main(int argc, char *argv[]) {
 	unsigned int pixels[WIDTH*HEIGHT] = {0};
 	struct ray current_ray;
-	int x, y, z = 0;
+	int x, y;
 
 	/* hard coded values for now.. */
 	struct sphere spheres[] = {
-		{{100, 100, 100}, 80, 0xff0000},
-		{{400, 100, 100}, 80, 0x00ff00},
+		{{200, 300, 100}, 80, 0xb20000},
 	};
 	struct sphere lights[] = {
-		{{0, 100, 15}, 6, 0xff},
+		{{400, 0, 100}, 1, 0xff},
+		{{400, 600, 100}, 1, 0xff},
+		{{0, 0, 100}, 1, 0xff},
+		{{0, 600, 100}, 1, 0xff},
 	};
 
 
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]) {
 	 */
 	for(x = 0; x < WIDTH; x++) {
 		for(y = 0; y < HEIGHT; y++) {
-			current_ray = makeray(makevec(x, y, z), makevec(0, 0, 1));
+			current_ray = makeray(makevec(400, 300, 0), norm(makevec(x-400, y-300, 10)));
 
 			pixels[WIDTH * y + x] = radiance(current_ray,
 					spheres, sizeof(spheres)/sizeof(struct sphere),
