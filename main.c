@@ -28,26 +28,26 @@ void write_image(unsigned int *pixels) {
 int main(int argc, char *argv[]) {
 	unsigned int pixels[WIDTH*HEIGHT] = {0};
 	struct ray current_ray;
+	struct vector camera;
 	int x, y;
 
 	/* hard coded values for now.. */
 	struct sphere spheres[] = {
-		{{200, 300, 100}, 80, 0xb20000},
+		{{200, 300, 100}, 80, 0xffffff},
+		{{500, 300, 100}, 80, 0xffffff},
+		{{400, 109000, 100}, 100000, 0xffffff},
+		{{400, 300, 109000}, 100000, 0xffffff},
 	};
 	struct sphere lights[] = {
-		{{400, 0, 100}, 1, 0xff},
-		{{400, 600, 100}, 1, 0xff},
-		{{0, 0, 100}, 1, 0xff},
-		{{0, 600, 100}, 1, 0xff},
+		{{400, 50, 100}, 1, 0xff},
 	};
 
 
-	/* TODO:
-	 * Use a camera to get the correct perspective.
-	 */
+	camera = makevec(400, 300, -500);
+	
 	for(x = 0; x < WIDTH; x++) {
 		for(y = 0; y < HEIGHT; y++) {
-			current_ray = makeray(makevec(400, 300, 0), norm(makevec(x-400, y-300, 10)));
+			current_ray = makeray(camera, norm(sub(makevec(x, y, 100), camera)));
 
 			pixels[WIDTH * y + x] = radiance(current_ray,
 					spheres, sizeof(spheres)/sizeof(struct sphere),
