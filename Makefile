@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -pedantic -ansi
-LDFLAGS = -lm
+CFLAGS = -Wall -pedantic -ansi -fopenmp
+LDFLAGS = -lm -fopenmp
 SRC = vector.c ray.c render.c sphere.c main.c
 OBJ = $(SRC:.c=.o)
 
