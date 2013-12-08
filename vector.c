@@ -1,7 +1,7 @@
 #include <math.h>
 #include "vector.h"
 
-struct vector makevec(float x, float y, float z) {
+struct vector vec(float x, float y, float z) {
 	struct vector c;
 	c.x = x;
 	c.y = y;

@@ -4,4 +4,4 @@ struct ray {
 	struct vector d;
 };
 
-struct ray makeray(struct vector, struct vector);
+struct ray ray(struct vector, struct vector);
