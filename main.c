@@ -31,21 +31,23 @@ int main(int argc, char *argv[]) {
 	struct ray current_ray, camera;
 	struct vector camera_up, camera_right;
 	int x, y;
-	double fov, fovx, fovy;
+	double fov, aspectratio;
 
 	/* hard coded values for now.. */
 	struct sphere spheres[] = {
-		{{200, 300, 100}, 80, 0x0000ff},
-		{{500, 300, 100}, 80, 0xff0000},
-		{{1400, 300, 100}, 50, 0x00ff00},
-		{{1200, 550, 300}, 150, 0xf0000f},
-		
+		{{0, 0, 110000}, 100000, 0xffffff}, /* back */
+		{{-105000, 0, 0}, 100000, 0xff0000}, /* left */
+		{{105000, 0, 0}, 100000, 0x0000ff}, /* right */
+		{{0, -105000, 0}, 100000, 0xffffff}, /* above */
+		{{0, 105000, 0}, 100000, 0xffffff}, /* below */
+		//{{0, 0, -110000}, 100000, 0x0000ff}, /* front */
 
-		{{400, 109000, 100}, 100000, 0xffffff},
-		{{400, 300, 109000}, 100000, 0xffffff},
+		{{-20, 0, 20}, 10, 0x00ff00}, /* mirror */
+		{{20, 7, 10}, 10, 0x00ff00}, /* glass */
+
 	};
 	struct sphere lights[] = {
-		{{400, 50, -10}, 1, 0xff},
+		{{0, -55, 15}, 1, 0xff},
 	};
 
 	if((pixels = malloc(sizeof(unsigned int) * WIDTH*HEIGHT)) == NULL) {
@@ -53,19 +55,28 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	camera = makeray(makevec(0, 0, 0), norm(makevec(0, 0, -1)));
-	camera_right = norm(cross(camera.d, makevec(0, 1, 0)));
+	camera = ray(vec(0, 0, -50), norm(vec(0, 0, 1)));
+	camera_right = norm(cross(camera.d, vec(0, 1, 0)));
 	camera_up = norm(cross(camera_right, camera.d));
 
-	fov = 130/2.0 * (PI/180);
-	fovx = tan(fov);
-	fovy = tan((double)HEIGHT/(double)WIDTH * fov);
+	fov = tan(90/2.0 * (PI/180));
+	aspectratio = (double)WIDTH / (double)HEIGHT;
 
 	#pragma omp parallel for private(x) private(y) private(current_ray)
 	for(x = 0; x < WIDTH; x++) {
 		for(y = 0; y < HEIGHT; y++) {
 
-			current_ray = makeray(camera.p, norm(makevec((x - WIDTH/2) * fovx, (y - HEIGHT/2) * fovy, 50)));
+			current_ray = ray(camera.p, norm(vec(
+				(((double)x / (double)WIDTH) * 2.0 - 1.0) * fov * aspectratio,
+				(((double)y / (double)HEIGHT) * 2.0 - 1.0) * fov,
+				1)));
+
+			/*
+			use this instead?
+			current_ray = ray(camera.p, add(
+				add(scale(x / WIDTH - 0.5, camera_right),
+					scale(y / HEIGHT - 0.5, camera_up)), camera.d));
+			*/
 
 			pixels[WIDTH * y + x] = radiance(current_ray,
 					spheres, sizeof(spheres)/sizeof(struct sphere),

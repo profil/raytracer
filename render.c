@@ -29,10 +29,9 @@ unsigned int radiance(struct ray current_ray, struct sphere *spheres, int sphere
 			break;
 		}
 		current_sphere = spheres[sphere_id];
-		hit = add(current_ray.p, scale(distance, current_ray.d)); /*makevec(current_ray.p.x, current_ray.p.y, distance);*/
+		hit = add(current_ray.p, scale(distance, current_ray.d));
 		normal = norm(sub(hit, current_sphere.c));
 
-		/* only one type of material so far */
 		/* struct vector glass_normal = dot(norm, current_ray.d) < 0 ? normal : scale(-1, normal); */
 
 
