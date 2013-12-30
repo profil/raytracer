@@ -1,10 +1,21 @@
 CC = gcc
-CFLAGS = -Wall -pedantic -ansi -fopenmp
-LDFLAGS = -lm -fopenmp
+CFLAGS = -Wall -pedantic -ansi
+LDFLAGS = -lm
 SRC = vector.c ray.c render.c sphere.c main.c
 OBJ = $(SRC:.c=.o)
+OS = $(shell uname)
+
+ifeq ($(OS), Darwin)
+else
+	CFLAGS += -fopenmp
+	LDFLAGS += -fopenmp
+endif
+
 
 all: rayc
+
+test: all
+	./rayc
 
 debug: CFLAGS += -g
 debug: all
@@ -18,4 +29,4 @@ rayc: $(OBJ)
 clean:
 	rm -f $(OBJ) rayc
 
-.PHONY: clean all debug
+.PHONY: clean all debug test
