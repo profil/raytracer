@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Werror -Wall -Wextra -pedantic -ansi
+CFLAGS = -Wall -Wextra -pedantic -ansi
 LDFLAGS = -lm
 SRC = vector.c ray.c render.c sphere.c main.c
 OBJ = $(SRC:.c=.o)
